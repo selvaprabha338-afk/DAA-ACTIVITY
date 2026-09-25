@@ -1,0 +1,84 @@
+1.TWO SUMS
+class Solution {
+    public int[] twoSum(int[] nums, int target) {
+        Map<Integer,Integer> map=new HashMap<>();
+        for(int i=0;i<nums.length;i++){
+            int required=target-nums[i];
+            if(map.containsKey(required)){
+                return new int[]{i,map.get(required)};
+            }
+            map.put(nums[i],i);
+        }
+        return new int[]{};
+    }
+}
+
+2. LONGEST SUBSTRING WITHOUT REPEATING CHARACTERS
+class Solution {
+    public int lengthOfLongestSubstring(String s) {
+        int[] last = new int[128];
+        int left = 0;
+        int maxLen = 0;
+        for (int right = 0; right < s.length(); right++) {
+            char c = s.charAt(right);
+            left = Math.max(left, last[c]);
+            maxLen = Math.max(maxLen, right - left + 1);
+            last[c] = right + 1;
+        }
+
+        return maxLen;
+    }
+}
+3.PRODUCT ARRAY EXCEPT SELF
+class Solution {
+    public int[] productExceptSelf(int[] nums) {
+        int n = nums.length;
+        int[] answer = new int[n];
+        answer[0] = 1;
+        for (int i = 1; i < n; i++) {
+            answer[i] = answer[i - 1] * nums[i - 1];
+        }
+        int right = 1;
+        for (int i = n - 1; i >= 0; i--) {
+            answer[i] = answer[i] * right;
+            right = right * nums[i];
+        }
+
+        return answer;
+    }
+}
+
+4.MAXIMUM SUBARRAY
+class Solution {
+    public int maxSubArray(int[] nums) {
+        int currentSum = nums[0];
+        int maxSum = nums[0];
+        for (int i = 1; i < nums.length; i++) {
+            currentSum = Math.max(nums[i], currentSum + nums[i]);
+            maxSum = Math.max(maxSum, currentSum);
+        }
+        return maxSum;
+    }
+}
+
+5.BINARY SEARCH
+class Solution {
+    public int search(int[] nums, int target) {
+        int left = 0;
+        int right = nums.length - 1;
+        while (left <= right) {
+             int mid = left + (right - left) / 2;
+             if (nums[mid] == target) {
+                return mid;
+            }
+            else if (nums[mid] < target) {
+                left = mid + 1;
+            }
+            else {
+                right = mid - 1;
+            }
+        }
+
+        return -1;
+    }
+}
